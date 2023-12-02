@@ -1,0 +1,13 @@
+input{
+   border-radius: 5px;
+   border: .1px solid #000;
+}
+.countries{
+   display: flex;
+}
+.show{
+   margin: 0 0 .5vh 1vw;
+   background-color: transparent;
+   border: 1px solid #000;
+   border-radius: 5px;
+}
