@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const password = process.argv[2]
-const url = `mongodb+srv://kenici780:Andrei199808@cluster0.2mqofs8.mongodb.net/phonebook?retryWrites=true&w=majority`
+const url = process.env.MONGODB_URI
 
 const personSchema = new mongoose.Schema({
    name: String,
