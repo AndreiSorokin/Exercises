@@ -1,0 +1,9 @@
+.button{
+   border-radius: 5px;
+   background-color: transparent;
+   margin: 0 .5vw;
+}
+
+.results{
+   margin: .5vh .5vw;
+}

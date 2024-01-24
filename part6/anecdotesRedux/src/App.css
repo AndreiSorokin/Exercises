@@ -1,0 +1,11 @@
+.anecdote{
+  margin: 2vh 0;
+}
+.button{
+  border-radius: 5px;
+  background-color: transparent;
+}
+.input{
+  border-radius: 5px;
+  margin-bottom: 1vh;
+}
