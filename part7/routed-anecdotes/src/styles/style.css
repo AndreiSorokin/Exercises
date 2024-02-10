@@ -1,0 +1,20 @@
+.link{
+   margin: 15px;
+}
+.footer {
+   margin-top: 50px;
+}
+.notification{
+   border: 1px solid rgb(46, 232, 46);
+   border-radius: 5px;
+   margin: 5px;
+}
+input {
+   margin:10px;
+   border-radius: 5px;
+}
+button {
+   background-color: transparent;
+   border-radius: 5px;
+   margin: 5px;
+}
