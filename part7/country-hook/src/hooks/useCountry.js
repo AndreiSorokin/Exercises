@@ -1,17 +1,20 @@
-import { useState, useEffect  } from 'react'
-import  axios  from 'axios'
+import { useState } from 'react';
+import axios from 'axios';
 
-export const useCountry = (countryName) => {
-  const [country, setCountry] = useState(null)
+export const useCountry = () => {
+  const [country, setCountry] = useState(null);
 
-  useEffect(() => {
-      axios
-      .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryName}`)
+  const fetchCountry = (countryName) => {
+    axios
+      .get(`https://restcountries.com/v3/name/${countryName}`)
       .then(res => {
-        setCountry(res.data)
+        setCountry(res.data);
       })
-      .catch(err => err.message)
-  }, [countryName])
+      .catch(err => {
+        console.error(err);
+        setCountry(null);
+      });
+  };
 
-  return { country }
-}
+  return { country: country, fetchCountry: fetchCountry };
+};

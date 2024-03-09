@@ -1,47 +1,41 @@
-import React, { useState } from 'react'
-import { useCountry } from '../hooks/useCountry'
-import { useField } from '../hooks/useField'
+import React from 'react';
+import { useCountry } from '../hooks/useCountry';
+import { useField } from '../hooks/useField';
 
-const Country = ({countryName}) => {
-  const { country } = useCountry(countryName)
-  const { selectedCountry, search,handleInputChange, handleClick } = useField()
+const Country = () => {
+  const { selectedCountry, handleInputChange } = useField();
+  const { country, fetchCountry } = useCountry();
 
-  console.log(country)
-
-  // if (!country) {
-  //   return <div>Loading...</div>
-  // }
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (selectedCountry.trim() !== '') {
+      fetchCountry(selectedCountry);
+    }
+  };
 
   return (
     <div>
-      <form action="">
+      <form onSubmit={handleClick}>
         <input type="text" onChange={handleInputChange} value={selectedCountry} />
-        <button onClick={handleClick}>Search</button>
-      </form>
-      <div>
-        {console.log(search)}
-      </div>
-{/* <form onSubmit={handleClick}>
-        <input type="text" onChange={handleInputChange} value={selectedCountry}/>
         <button type="submit">Search</button>
       </form>
 
-      {
-        isEmpty
-        ? <h3>Not found...</h3>
-        : search.map(c=> {
-          return (
-            <div key={c.name.official}>
-              <h3>{c.name.official} </h3>
-              <div>capital {c.capital} </div>
-              <div>population {c.population}</div> 
-              <img src={c.flags.png} height='100' alt={`flag of ${c.name.official}`}/> 
-            </div>
-          )
-        })
-      } */}
-    </div>
-  )
-}
+      {country ? (
+        <div key={country[0].name.official}>
+          {console.log(country[0].flags[1])}
+          <h3>{country[0].name.official}</h3>
+          <div>capital {country[0].capital}</div>
+          <div>population {country[0].population}</div>
+          <img src={country[0].flags[1]} style={{height:'150px', width: '250px', marginTop: '15px', border: '1px solid black'}} alt={`flag of ${country[0].name.official}`} />
 
-export default Country
+        </div>
+      ) : (
+        <div>
+          {!selectedCountry && <h3>Enter a country name to search</h3>}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Country;
