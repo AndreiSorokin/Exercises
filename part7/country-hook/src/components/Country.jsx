@@ -20,18 +20,20 @@ const Country = () => {
         <button type="submit">Search</button>
       </form>
 
-      {country ? (
+      {country && country.length > 0 ? (
         <div key={country[0].name.official}>
-          {console.log(country[0].flags[1])}
           <h3>{country[0].name.official}</h3>
           <div>capital {country[0].capital}</div>
           <div>population {country[0].population}</div>
           <img src={country[0].flags[1]} style={{height:'150px', width: '250px', marginTop: '15px', border: '1px solid black'}} alt={`flag of ${country[0].name.official}`} />
-
         </div>
       ) : (
         <div>
-          {!selectedCountry && <h3>Enter a country name to search</h3>}
+          {!selectedCountry ? (
+            <h3>Enter a country name to search</h3>
+          ) : (
+            <h3>Country not found</h3>
+          )}
         </div>
       )}
     </div>

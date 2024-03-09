@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const useCountry = () => {
+export const useCountry = (countryName) => {
   const [country, setCountry] = useState(null);
 
   const fetchCountry = (countryName) => {
@@ -11,10 +11,13 @@ export const useCountry = () => {
         setCountry(res.data);
       })
       .catch(err => {
-        console.error(err);
         setCountry(null);
       });
   };
+
+  useEffect(() => {
+    fetchCountry();
+  }, [countryName]);
 
   return { country: country, fetchCountry: fetchCountry };
 };
