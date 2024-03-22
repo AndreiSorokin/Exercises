@@ -1,0 +1,44 @@
+.success-message {
+  width: 30vw;
+  font-size: 1.3vw;
+  border: 2px solid rgb(23, 233, 23);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 3vh;
+  color: rgb(10, 214, 10);
+}
+.error-message {
+  width: 30vw;
+  font-size: 1.3vw;
+  border: 2px solid rgb(233, 23, 23);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 3vh;
+  color: rgb(214, 10, 10);
+}
+.input {
+  border-radius: 5px;
+  margin: 0 0 2vh 0;
+}
+.button {
+  background-color: transparent;
+  border-radius: 5px;
+  margin: 2vh 0;
+}
+.save-button {
+  width: 5rem;
+}
+.logout-button {
+  margin: 0 0 0 1vw;
+}
+.submit-form {
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+}
+.button-like {
+  margin: 0 0 0 1vw;
+}
+.button-delete {
+  transform: translate(60px, -50px);
+}
