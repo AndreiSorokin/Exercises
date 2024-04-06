@@ -27,20 +27,6 @@ let authors = [
   },
 ]
 
-/*
- * Suomi:
- * Saattaisi olla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
- * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
- *
- * English:
- * It might make more sense to associate a book with its author by storing the author's id in the context of the book instead of the author's name
- * However, for simplicity, we will store the author's name in connection with the book
- *
- * Spanish:
- * Podría tener más sentido asociar un libro con su autor almacenando la id del autor en el contexto del libro en lugar del nombre del autor
- * Sin embargo, por simplicidad, almacenaremos el nombre del autor en conexión con el libro
-*/
-
 let books = [
   {
     title: 'Clean Code',
@@ -95,48 +81,106 @@ let books = [
 
 
 const typeDefs = `
-   type Query {
-      bookCount: Int
-      authorCount: Int
-      allBooks: [Book!]!
-      allAuthors: [Author!]!
-   }
+    type Query {
+        bookCount: Int
+        authorCount: Int
+        allBooks(author: String, genre: String): [Book!]!
+        allAuthors: [Author!]!
+    }
 
-   type Book { 
-      title: String
-      author: String
-      published: String
-      genres: [String!]!
-   }
+    type Book { 
+        title: String
+        author: String
+        published: Int
+        genres: [String!]!
+    }
 
-   type Author {
-      name: String
-      bookCount: Int
-   }
+    type Author {
+        name: String
+        bookCount: Int
+        born: Int 
+    }
+
+    type Mutation {
+      addBook(
+        title: String!
+        author: String!
+        published: Int!
+        genres: [String!]!
+      ): Book!
+
+      editAuthor(
+        name: String
+        setBornTo: Int
+      ): Author
+    }
 `
 
 const resolvers = {
-   Query: {
-      bookCount: () => books.length,
-      authorCount: () => authors.length,
-      allBooks: () => books,
-      allAuthors: () => authors
-   },
-   Author: {
-      bookCount: (author) => {
-         const authoredBooks = books.filter(book => book.author === author.name);
-         return authoredBooks.length;
+  Query: {
+    bookCount: () => books.length,
+    authorCount: () => authors.length,
+    allBooks: (_, { author, genre }) => {
+      let filterBooks = books;
+
+      if(author) {
+        filterBooks = filterBooks.filter(book => book.author === author);
       }
-   }
-}
+
+      if(genre) {
+        filterBooks = filterBooks.filter(book => book.genres.includes(genre))
+      }
+
+      return filterBooks
+    },
+    allAuthors: () => authors
+  },
+
+  Author: {
+    bookCount: (author) => {
+        const authoredBooks = books.filter(book => book.author === author.name);
+        return authoredBooks.length;
+    }
+  },
+  
+  Mutation: {
+    addBook: (_, { title, author, published, genres }) => {
+      let authorExists = authors.find(a => a.name === author);
+
+      if (!authorExists) {
+        authorExists = { name: author, bookCount: 1 };
+        authors.push(authorExists);
+      } else {
+        authorExists.bookCount++;
+      }
+
+      const newBook = { title, author, published, genres };
+      books.push(newBook);
+
+      return newBook;
+    },
+    editAuthor: (_, { name, setBornTo }) => {
+      let author = authors.find(a => a.name === name)
+
+      if (!author) {
+        return null;
+      }
+
+      author.name = name;
+      author.born = setBornTo;
+
+      return author
+    }
+  },
+};
 
 const server = new ApolloServer({
-   typeDefs,
-   resolvers,
+    typeDefs,
+    resolvers,
 })
 
 startStandaloneServer(server, {
-   listen: { port: 4000 },
+    listen: { port: 4000 },
 }).then(({ url }) => {
-   console.log(`Server ready at ${url}`)
+    console.log(`Server ready at ${url}`)
 })
