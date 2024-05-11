@@ -156,7 +156,6 @@ const resolvers = {
 
       const newBook = { title, author, published, genres };
       books.push(newBook);
-
       return newBook;
     },
     editAuthor: (_, { name, setBornTo }) => {
@@ -168,7 +167,7 @@ const resolvers = {
 
       author.name = name;
       author.born = setBornTo;
-
+      console.log("Updated author:", author);
       return author
     }
   },
