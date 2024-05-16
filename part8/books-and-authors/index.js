@@ -30,6 +30,7 @@ const typeDefs = `
         bookCount: Int
         authorCount: Int
         allBooks(author: String, genre: String): [Book!]!
+        allGenres: [String!]!
         allAuthors: [Author!]!
         me: User
     }
@@ -115,6 +116,7 @@ const resolvers = {
   
   Mutation: {
     addBook: async (_, { title, author, published, genres }, context) => {
+      console.log(context)
       if (!context.currentUser) {
         throw new GraphQLError('Not authenticated', {
           extensions: {
@@ -225,9 +227,13 @@ startStandaloneServer(server, {
   context: async ({ req }) => {
     const auth = req ? req.headers.authorization : null;
     if (auth && auth.toLowerCase().startsWith('bearer ')) {
-      const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET);
-      const currentUser = await User.findById(decodedToken.id);
-      return { currentUser };
+      try {
+        const decodedToken = jwt.verify(auth.substring(7), process.env.JWT_SECRET);
+        const currentUser = await User.findById(decodedToken.id);
+        return { currentUser };
+      } catch (error) {
+        console.error("Authentication error:", error.message);
+      }
     }
   }
 }).then(({ url }) => {
