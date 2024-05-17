@@ -7,12 +7,14 @@ import NewBook from './components/NewBook'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
 import Recommendations from './components/Recommendations'
+import BookAddedAlert from './components/BookAddedAlert'
 
 const App = () => {
 
   return (
     <div>
       <NavBar/>
+      <BookAddedAlert />
       <Routes>
         <Route path='/' element={<Authors/>}></Route>
         <Route path='/books' element={<Books/>}></Route>
