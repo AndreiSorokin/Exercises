@@ -1,4 +1,4 @@
-function calculateBmi (height: number, weight: number) {
+export default function calculateBmi (height: number, weight: number) {
    const calc: number = weight / ( ( height / 100 ) ** 2 )
    if(calc < 18.5) {
       const verdict: string = 'underweight'
@@ -13,20 +13,3 @@ function calculateBmi (height: number, weight: number) {
    const verdict: string = 'obese'
    return verdict
 }
-
-const args = process.argv.slice(2)
-
-if(args.length !== 2) {
-   console.error('Please provide height and weight')
-   process.exit(1)
-}
-
-const height = parseFloat(args[0]);
-const weight = parseFloat(args[1]);
-
-if (isNaN(height) || isNaN(weight)) {
-   console.error('Height and weight should be numbers.');
-   process.exit(1);
-}
-
-console.log(calculateBmi(height, weight))

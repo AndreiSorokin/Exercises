@@ -1,14 +1,14 @@
-interface ExerciseResult {
+export interface ExerciseResult {
    periodLength: number;
    trainingDays: number;
-   target: number;
    average: number;
    success: boolean;
    rating: number;
    ratingDescription: string;
+   target: number;
 }
 
-function calculateExercises(dailyExcerciseHours: number[], target: number) {
+export default function calculateExercises(dailyExcerciseHours: number[], target: number) {
    const periodLength = dailyExcerciseHours.length
    const trainingDays = dailyExcerciseHours.filter(hours => hours > 0).length
    const totalHours = dailyExcerciseHours.reduce((sum, hours) => sum + hours, 0)
@@ -32,28 +32,10 @@ function calculateExercises(dailyExcerciseHours: number[], target: number) {
    return {
       periodLength,
       trainingDays,
-      target,
       average,
       success,
       rating,
-      ratingDescription
+      ratingDescription,
+      target
    }
 }
-
-const argms = process.argv.slice(2)
-
-if (argms.length < 2) {
-   console.error('Please provide the target and daily exercise hours as arguments.');
-   process.exit(1);
-}
-
-
-const target = parseFloat(argms[0]);
-const dailyExcerciseHours = argms.slice(1).map(arg => parseFloat(arg));
-
-if (isNaN(target) || dailyExcerciseHours.some(isNaN)) {
-   console.error('Invalid input. Target and all exercise hours should be numbers.');
-   process.exit(1);
-}
-
-console.log(calculateExercises(dailyExcerciseHours, target));
