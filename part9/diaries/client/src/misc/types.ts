@@ -14,18 +14,20 @@ export enum Weather {
 }
 
 export type WeatherData = {
-   id?: String;
-   date: String;
+   id: string;
+   date: string;
    weather: Weather;
    visibility: Visibility;
-   comment?: String;
+   comment: string;
 }
 
 export type FlightData = WeatherData[];
 
 export type NewEntry = {
-   date: String;
+   date: string;
    visibility: Visibility;
    weather: Weather;
-   comment?: String;
+   comment: string;
 }
+
+export type NonSensetiveFlightData = Omit<FlightData, 'id'>
