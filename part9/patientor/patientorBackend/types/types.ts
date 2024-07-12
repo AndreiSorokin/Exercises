@@ -12,17 +12,17 @@ export enum Gender {
 
 export type Diagnosis = {
    code: string;
-}
+};
 
 export type Discharge = {
    date: string;
    criteria: string;
-}
+};
 
 export type SickLeave = {
    startDate: string;
    endDate: string;
-}
+};
 
 interface BaseEntry {
    id: string;
@@ -64,7 +64,7 @@ export interface Patient {
    gender: Gender;
    occupation: string;
    entries: Entry[];
-};
+}
 
 export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
 

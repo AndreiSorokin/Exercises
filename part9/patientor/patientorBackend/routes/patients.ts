@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
    } else {
       res.status(404).send('Patient not found');
    }
-})
+});
 
 router.post('/', (req, res) => {
    const { name, dateOfBirth, ssn, gender, occupation, entries } = req.body as {
@@ -53,6 +53,6 @@ router.post('/:id/entries', (req, res) => {
          res.status(400).send('An unknown error occurred');
       }
    }
-})
+});
 
 export default router;

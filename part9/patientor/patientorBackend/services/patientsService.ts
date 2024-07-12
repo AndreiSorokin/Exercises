@@ -9,21 +9,18 @@ const getPatients = (): NonSensitivePatient[] => {
       name,
       ssn,
       dateOfBirth, 
-      gender: gender as Gender, 
+      gender, 
       occupation
    }));
 };
 
 const getSeiglePatient = (id: string): Patient => {
-   const patient = patientData.find(p => p.id ===id)
+   const patient = patientData.find(p => p.id ===id);
    if (!patient) {
       throw new Error(`Patient with id ${id} not found`);
    }
-   return {
-      ...patient,
-      gender: patient.gender as Gender
-   };
-}
+   return patient;
+};
 
 const addPatients = (name: string, dateOfBirth: string, ssn: string, gender: Gender, occupation: string, entries: Entry[]): newPatient => {
    const newPatient = {
@@ -43,7 +40,7 @@ const addEntry = (patientId: string, entry: EntryWithoutId): Entry => {
    const newEntry = {
       id: uuid(),
       ...entry
-   }
+   };
 
    const patient = patientData.find(p => p.id === patientId);
 
@@ -75,7 +72,7 @@ const addEntry = (patientId: string, entry: EntryWithoutId): Entry => {
 
    patient.entries.push(newEntry);
    return newEntry;
-}
+};
 
 
 export default {
